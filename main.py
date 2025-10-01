@@ -96,7 +96,7 @@ def login_form():
                 else:
                     st.session_state["admin"] = None
                     st.session_state["username"] = None
-                    st.error(f"Login failed: {data.get("error", "Invalid credentials.")}")
+                    st.error(f"Login failed: {data.get('error', 'Invalid credentials.')}")
 
 # --- Register Form ---
 @st.dialog("Register")
@@ -143,7 +143,7 @@ def register_form():
                     st.session_state["show_login"] = True # Show login form
                     st.rerun()
                 else:
-                    st.error(f"Registration failed: {data.get("error", "Unknown error.")}")
+                    st.error(f"Registration failed: {data.get('error', 'Unknown error')}")
 
 # --- New Transaction Form ---
 @st.dialog("New Transaction")
