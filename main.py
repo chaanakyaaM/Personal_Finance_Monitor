@@ -298,10 +298,10 @@ elif st.session_state["admin"] == "user":
         else:
             try:
                 c1,c2,c3,c4 = st.columns(4)
-                c1.metric("Gross Income", f"${res.get("income",0)}", delta=f"${res.get("income",0)*1}")
-                c2.metric("Total Expense", f"${res.get("expense",0)}")
-                c3.metric("Net Savings", f"${res.get("net",0):.2f}")
-                c4.metric("Total Transactions", res.get("total_transactions",0))
+                c1.metric("Gross Income", f"${res.get('income',0)}", delta=f"${res.get('income',0)*1}")
+                c2.metric("Total Expense", f"${res.get('expense',0)}")
+                c3.metric("Net Savings", f"${res.get('net',0):.2f}")
+                c4.metric("Total Transactions", res.get('total_transactions',0))
 
                 st.subheader("Income and Expense Distributions")
                 c1,c2 = st.columns(2)
