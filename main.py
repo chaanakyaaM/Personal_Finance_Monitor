@@ -189,8 +189,8 @@ st.sidebar.title("App Navigation")
 
 if st.session_state["admin"]:
     # User is logged in, show status and logout button
-    st.sidebar.info(f"Welcome, **{st.session_state["username"]}**")
-    st.sidebar.info(f"User ID: {st.session_state["user_id"]}")
+    st.sidebar.info(f"Welcome, **{st.session_state['username']}**")
+    st.sidebar.info(f"User ID: {st.session_state['user_id']}")
     if st.sidebar.button("Logout", key="logout_btn", width="stretch"):
         logout()
     if st.sidebar.button("Refresh", key = "refresh_btn", width="stretch"):
@@ -262,7 +262,7 @@ elif st.session_state["admin"] == "user":
     with tab1:
         st.subheader("Transactions Overview")
         st.write("This is where your can view all of your transactions.")
-        res = handle_api_request(f"/transaction/{st.session_state["user_id"]}", None, "GET")
+        res = handle_api_request(f"/transaction/{st.session_state['user_id']}", None, "GET")
         columns = ["Transaction ID", "Timestamp", "Category", "Type", "Amount", "Note"]
         df = pd.DataFrame(res, columns=columns)
 
@@ -292,7 +292,7 @@ elif st.session_state["admin"] == "user":
     # Dashboard Tab
     with tab2:
         st.header("Dashboard Analytics")
-        res = handle_api_request(f"/analytics/{st.session_state["user_id"]}", None, "GET")
+        res = handle_api_request(f"/analytics/{st.session_state['user_id']}", None, "GET")
         if res.get("error"):
             st.error(res.get("error"))
         else:
