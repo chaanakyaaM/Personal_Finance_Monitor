@@ -1,5 +1,5 @@
 [project]
-name = "Personal Finance Monitor"
+name = "Personal_Finance_Monitor"
 version = "0.1.0"
 description = "This is a web application designed to help users track, visualize, and understand their income and expenses."
 readme = "README.md"
