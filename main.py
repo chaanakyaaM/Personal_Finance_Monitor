@@ -1,13 +1,13 @@
 import os
 import time 
 import requests
-import dotenv
 import pandas as pd
 import streamlit as st
 import plotly.express as px
+from dotenv import load_dotenv
 import plotly.graph_objects as go
 
-dotenv.load_dotenv()
+load_dotenv()
 
 # The URL for the flask server 
 API_URL = os.getenv("API_URL")
@@ -136,14 +136,14 @@ def register_form():
 
             data = handle_api_request("/register", {"username": username, "password_hash": password}, "POST")
 
-            if data:
+            try:
                 if data.get("auth"):
                     st.success(f"Account created successfully for **{username}**! Please log in.")
                     st.session_state["show_register"] = False # Hide registration form
                     st.session_state["show_login"] = True # Show login form
                     st.rerun()
-                else:
-                    st.error(f"Registration failed: {data.get('error', 'Unknown error')}")
+            except Exception as e:
+                st.error(f"Registration failed: {data.get('error', 'Unknown error')}")
 
 # --- New Transaction Form ---
 @st.dialog("New Transaction")
@@ -167,22 +167,41 @@ def new_transaction_form():
                 "notes" : notes
             }
             res = handle_api_request("/transaction", data, "POST")
-            if res.get("message"):
-                st.success(res.get("message"))
-                st.rerun()
+            try:
+                if res.get("message"):
+                    st.success(res.get("message"))
+                    st.rerun()
+            except Exception as e:
+                st.error(res.get("error"))
 
+# --- Delete Transaction ---
 @st.dialog("Delete Transaction")
 def delete_transaction_form():
     transaction_id = st.number_input("Transaction ID", min_value = 1, step = 1, format = "%d")
     if st.button("Delete"):
         res = handle_api_request(f"/delete_transaction/{st.session_state["user_id"]}/{int(transaction_id)}", None, "DELETE")
-        if res.get("message"):
-            st.success(res.get("message"))
-            st.rerun()
-        else:
+        try:
+            if res.get("message"):
+                st.success(res.get("message"))
+                st.rerun()
+        except Exception as e:
             st.error(res.get("error"))
             time.sleep(3)
             st.rerun()
+
+# --- Delete User ---
+@st.dialog("Delete User")
+def delete_user():
+    user_id = st.number_input("User ID", min_value = 1, step = 1, format = "%d")
+    if st.button("Delete"):
+        res = handle_api_request(f"/delete_user/{int(user_id)}", None, "DELETE")
+        try:
+            if res.get("message"):
+                st.success("User deleted successfully.")
+                time.sleep(1)
+                st.rerun()
+        except Exception as e:
+            st.error(res.get("error"))
 
 # --- Sidebar Navigation & Status ---   
 st.sidebar.title("App Navigation")
@@ -252,6 +271,9 @@ elif st.session_state["admin"] == "admin":
 
     st.subheader("Users")
     st.dataframe(df_users)
+
+    if st.button("Delete User"):
+        delete_user()
 
 # If regular user is logged in   
 elif st.session_state["admin"] == "user":
