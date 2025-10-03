@@ -57,8 +57,13 @@ def handle_api_request(endpoint, data = None, method = "GET"):
         st.error(f"API Error: Could not connect to the backend server. ({e})")
         return None
 
+# Only to wake up the backend server
 try:
     res = handle_api_request('/', None, 'GET')
+    if res is not None:
+        st.success("Server woke up.")
+    if res is None:
+        st.write("kindly wait a few seconds for the server to wake up, then - hit refresh.")
 except:
     pass
 
@@ -228,6 +233,9 @@ else:
     if st.sidebar.button("Register", key="register_btn", width="stretch"):
         st.session_state["show_register"] = True
         st.session_state["show_login"] = False
+    
+    if st.sidebar.button("Refresh", key="Refresh_btn", width="stretch"):
+        st.rerun()
 
 # --- Main Content Rendering ---
 st.title("Personal Finance Monitor")
