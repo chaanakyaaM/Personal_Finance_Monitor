@@ -22,7 +22,7 @@
 - **Environment Management:** Python `dotenv`
 
 ## Steps to set-up the project locally
-
+- **NOTE**: As the project utilizes a decoupled architecture with separate repositories for the frontend and backend, the setup is aslo divided into two individual parts: Frontend and Backend.
 ## For Frontend:
 ### 1. Clone the Repository
 ```bash
@@ -92,11 +92,14 @@ uv add -r requirements.txt
 ```
 
 ### 4. Configure Environment Variables
-```Create a .env file in the project root:
-DB_PASSWORD = your_db_password
-DB_NAME = your_db_name
-DB_USER = your_db_user (mostly postgres)
+```Create a .env file in the project root and update the values:
+DB_NAME = YOUR_DB_NAME 
+DB_USER = YOUR_DB_USER 
+DB_PASSWORD = YOUR_DB_PASSWORD 
+DB_HOST = YOUR_DB_HOST 
+DB_PORT = YOUR_DB_PORT 
 ```
+
 ### 5. Run Backend server (Flask)
 ```bash
 python app.py
@@ -119,6 +122,7 @@ personal-finance-monitor/
 personal-finance-monitor-server/
 │── .env                   
 │── app.py
+│── db_setup.sql
 │── dao/
 │   ├── __init__.py
 │   ├── dbconfig.py

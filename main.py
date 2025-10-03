@@ -57,6 +57,11 @@ def handle_api_request(endpoint, data = None, method = "GET"):
         st.error(f"API Error: Could not connect to the backend server. ({e})")
         return None
 
+try:
+    res = handle_api_request('/', None, 'GET')
+except:
+    pass
+
 # --- Login Form ---
 @st.dialog("Login")
 def login_form():
